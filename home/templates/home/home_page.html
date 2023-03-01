@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="../../static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'home/font-awesome-4.7.0/css/font-awesome.min.css' %}">
 {% endblock extra_css %}
 
 {% block content %}
     <div class="wrapper">
         <div class="header">
-            <img src="../../static/logo.png" alt="logo" class="header_logo">
+            <img src="{% static 'home/logo.png' %}" alt="logo" class="header_logo">
             <div class="header_status">
                 <p class="header_text">
                     Дежурный психолог по Дальнему Востоку
@@ -25,7 +25,7 @@
 
         <div class="content">
             <div class="opener">
-                <img src="../../static/opener.webp" alt="" class="opener_img">
+                <img src="{% static 'home/opener.webp' %}" alt="" class="opener_img">
                 <ul class="opener_ul">
                     <li class="opener_li"><span class="opener_span">Клинический психолог</span></li>
                     <li class="opener_li"><span class="opener_span">Семейный и детский психолог</span></li>
@@ -62,14 +62,6 @@
                         <li class="service_li"><span class="service_span">Как наладить отношения взрослым детям со своими родителями, даже если они с ними не общались годы</span></li>
                     </ul>
                 </div>
-            </div>
-
-            <hr>
-
-            <div class="tip">
-                Поступки детей - это показатель психологического здоровья их родителей. 
-                <br>
-                Я помогу избежать ошибок в воспитании.
             </div>
 
             <hr>
@@ -161,7 +153,7 @@
             <hr>
 
             <div class="about">
-                <img src="../../static/about.webp" alt="" class="about_img">
+                <img src="{% static 'home/about.webp' %}" alt="" class="about_img">
                 <div class="about_text">
                     <ul class="about_ul">
                         <li class="about_li"><span class="opener_span">2 высших образования: инженер и психолог</span></li>

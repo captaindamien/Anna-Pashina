@@ -10,7 +10,7 @@ class HomePage(Page):
 
 class NewPage(Page):    
     parent_page_types = ['HomePage']
-    landing_page_template = 'home/new_style/index.html',
+    # template = 'home/new_style/index.html'
     
     title_field = models.CharField(
         max_length=200,
