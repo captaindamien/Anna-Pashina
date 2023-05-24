@@ -1,57 +1,63 @@
 {% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
 {% load static %}
+
 
 <!DOCTYPE html>
 <html lang="en" class="no-js" >
+
+
 <head>
 
-    <!--- basic page needs
-    ================================================== -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Психолог Анна Пашина</title>
+    <title>{{ page.title }}</title>
 
     <script>
         document.documentElement.classList.remove('no-js');
         document.documentElement.classList.add('js');
     </script>
 
-    <!-- CSS
-    ================================================== -->
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+    
+        ym(93698277, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/93698277" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
     <link rel="stylesheet" href="{% static 'home/css/vendor.css' %}">
     <link rel="stylesheet" href="{% static 'home/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'home/font-awesome-4.7.0/css/font-awesome.min.css' %}">   
 
-    <!-- favicons
-    ================================================== -->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'home/new_logo.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'home/new_logo.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'home/new_logo.png' %}">
-    <link rel="manifest" href="site.webmanifest">
 
 </head>
 
 
 <body id="top">
 
-
-    <!-- preloader
-    ================================================== -->
     <div id="preloader">
         <div id="loader" class="line"></div>
     </div>
 
-
-    <!-- page wrap
-    ================================================== -->
     <div id="page" class="s-pagewrap">
 
-
-        <!-- # site header 
-        ================================================== -->
         <header id="masthead" class="s-header">
 
-             <div class="s-header__block">
+            <div class="s-header__block">
                 <div class="s-header__branding">
                     <p class="site-title">
                         <a href="{% pageurl page %}" rel="home"><img src="{% static 'home/logo2.png' %}" alt="logo" class="logo_wide"></a>
@@ -59,10 +65,9 @@
                 </div>
 
                 <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
-            </div> <!-- end s-header__block -->
+            </div>
 
             <div class="row s-header__nav-wrap">
-
                 <nav class="s-header__nav">
                     <ul>
                         <li class="current"><a href="#intro" class="smoothscroll">Главная</a></li>
@@ -70,7 +75,7 @@
                         <li><a href="#works" class="smoothscroll">Преимущества</a></li>
                         <li><a href="#colophon" class="smoothscroll">Запись</a></li>
                     </ul>
-                </nav> <!-- end s-header__nav -->
+                </nav>
 
                 <ul class="s-header__social">
                     <li>
@@ -82,124 +87,89 @@
                     <li>
                         <a href="http://t.me/psiholog_pashina" target="_blank"><i class="fa fa-2x fa-telegram" aria-hidden="true" style="color: black; margin-left: 5px;"></i></a>
                     </li>
-                </ul>  <!-- end s-header__social -->
+                </ul>
+            </div>
 
-            </div> <!-- end s-header__nav-wrap -->
+        </header>
 
-        </header> <!-- end s-header -->
-
-
-        <!-- intro
-        ================================================== -->
         <section id="intro" class="s-intro">
 
             <div class="row">
-                <div class="column lg-12 s-intro__content">
 
+                <div class="column lg-12 s-intro__content">
                     <div class="s-intro__text">
                         <h1 class="s-intro__text-huge animate-on-load">
-                            Анна Пашина
+                            {{ page.main_title }}
                         </h1>
-                        <h3 class="animate-on-load">Семейный и детский психолог</h3>
+
+                        <h3 class="animate-on-load">{{ page.sub_title }}</h3>
                     </div>
-
-                    <div class="s-intro__bg"></div>
-
+                    
+                    {% image page.main_image original as main_image %}
+                    <div class="s-intro__bg" style="background-image: url({{main_image.url}});"></div>
                 </div>
+
             </div>
 
-        </section> <!-- end s-intro -->
+        </section>
 
-
-        <!-- about
-        ================================================== -->
         <section id="about" class="s-about">
-
 
             <div class="s-about__block s-about__intro">
 
                 <div class="row">
                     <div class="column lg-12">
-                        <p class="attention-getter animate-on-load">
-                            Клинический психолог
-                        </p>
-                        <p class="attention-getter animate-on-load">
-                            Психотерапия и психологическая коррекция детей и подростков
-                        </p>
+                        {% for element in page.about_block.all %}
+                            <p class="attention-getter animate-on-load">{{ element.about_text }}</p>
+                        {% endfor %}
                     </div>
                 </div>
 
                 <div style="padding-top: 0;" class="row s-about__timeline" data-animate-block>
-                    <div style="margin-bottom: 100px;" class="column lg-6 stack-on-900 s-about__timeline-section" data-animate-el> 
+                    <div class="column lg-6 stack-on-900 s-about__timeline-section" data-animate-el>
                         <div class="timeline">
-    
-                            <div class="timeline__block">
-                                <div class="timeline__bullet"></div>
-    
-                                <div class="timeline__desc" style="margin-bottom: 30px;">
-                                    <p style="margin-bottom: 0;">Знаю как найти общий язык с ребёнком любого возраста</p>
+                            {% for element in page.skills_block.all %}
+                                <div class="timeline__block">
+                                    <div class="timeline__bullet"></div>
+        
+                                    <div class="timeline__desc" style="margin-bottom: 30px;">
+                                        <p style="margin-bottom: 0;">{{ element.skills_text }}</p>
+                                    </div>
                                 </div>
-                            </div>
-    
-                            <div class="timeline__block">
-                                <div class="timeline__bullet"></div>
-    
-                                <div class="timeline__desc" style="margin-bottom: 30px;">
-                                    <p style="margin-bottom: 0;">Помогаю родителям сберечь нервную систему и воспитывать детей в кайф</p>
-                                </div>
-                            </div>
-    
-                        </div> <!-- end timeline -->
-    
-                    </div> <!-- end s-about__timeline-section -->
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
 
-            </div> <!-- end s-about__intro -->
+            </div>
 
             <div class="row s-about__timeline" data-animate-block>
-                <div style="margin-bottom: 100px;" class="column lg-6 stack-on-900 s-about__timeline-section" data-animate-el> 
-                    
+
+                <div style="margin-bottom: 100px;" class="column lg-6 stack-on-900 s-about__timeline-section" data-animate-el>
                     <h2 class="text-pretitle animate-on-load">Услуги и цены</h2>
 
                     <div class="timeline">
-
-                        <div class="timeline__block">
-                            <div class="timeline__bullet"></div>
-
-                            <div class="timeline__desc" style="margin-bottom: 30px;">
-                                <p style="margin-bottom: 0;">Первая консультация</p>
-                                <h2 class="text-subtitle">БЕСПЛАТНО!</h2>
+                        {% for element in page.price_block.all %}
+                            <div class="timeline__block">
+                                <div class="timeline__bullet"></div>
+                                
+                                    <div class="timeline__desc" style="margin-bottom: 30px;">
+                                        <p style="margin-bottom: 0;">{{ element.price_text }}</p>
+                                        <h2 class="text-subtitle">{{ element.price_count }}</h2>
+                                    </div>
                             </div>
-                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
 
-                        <div class="timeline__block">
-                            <div class="timeline__bullet"></div>
-
-                            <div class="timeline__desc" style="margin-bottom: 30px;">
-                                <p style="margin-bottom: 0;">Консультация / Сессия</p>
-                                <h2 class="text-subtitle">3000 руб.</h2>
-                            </div>
-                        </div>
-
-                        <div class="timeline__block">
-                            <div class="timeline__bullet"></div>
-
-                            <div class="timeline__desc" style="margin-bottom: 30px;">
-                                <p style="margin-bottom: 0;">Консультация / Сессия + поддержка / ведение в течение недели</p>
-                                <h2 class="text-subtitle">6000 руб.</h2>
-                            </div>
-                        </div>
-
-                    </div> <!-- end timeline -->
-
-                </div> <!-- end s-about__timeline-section -->
-
+            </div>
 
             <div class="s-about__block s-about__career">
 
                 <div class="row s-about__career-header">
                     <div class="column lg-12">    
                         <p class="text-huge-title">
-                            Вам поможет моя консультация, если вы хотите:
+                            {{ page.products_title }}
                         </p>
                     </div>
                 </div>
@@ -207,206 +177,71 @@
                 <div class="row s-about__timeline" data-animate-block>
                     <div class="column lg-6 stack-on-900 s-about__timeline-section" data-animate-el>    
                         <div class="timeline">
+                            {% for product in products_left %}                            
+                                <div class="timeline__block">
+                                    <div class="timeline__bullet"></div>
+
+                                    <div class="timeline__desc">
+                                        <p>{{ product.product_text }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
     
-                            <div class="timeline__block">
-                                <div class="timeline__bullet"></div>
-
-                                <div class="timeline__desc">
-                                    <p>Получать радость от воспитания своих детей, вместо нервных срывов и чувства вины</p>
-                                </div>
-                            </div>
-    
-                            <div class="timeline__block">
-                                <div class="timeline__bullet"></div>
-
-                                <div class="timeline__desc">
-                                    <p>Создать счастливую и крепкую семью</p>
-                                </div>
-                            </div>
-
-                            <div class="timeline__block">
-                                <div class="timeline__bullet"></div>
-
-                                <div class="timeline__desc">
-                                    <p>Жить без наказания детей</p>
-                                </div>
-                            </div>
-
-                            <div class="timeline__block">
-                                <div class="timeline__bullet"></div>
-
-                                <div class="timeline__desc">
-                                    <p>Быстро решать конфликты между детьми и родителями</p>
-                                </div>
-                            </div>
-
-                            <div class="timeline__block">
-                                <div class="timeline__bullet"></div>
-
-                                <div class="timeline__desc">
-                                    <p>Жить без эмоционального выгорания и всегда находить время для своих детей</p>
-                                </div>
-                            </div>
-    
-                        </div> <!-- end timeline -->
-    
-                    </div> <!-- end s-about__timeline-section -->
+                    </div>
     
                     <div class="column lg-6 stack-on-900 s-about__timeline-section" data-animate-el>    
                         <div class="timeline">
-    
-                            <div class="timeline__block">
-                                <div class="timeline__bullet"></div>
+                            {% for product in products_right %}
+                                <div class="timeline__block">
+                                    <div class="timeline__bullet"></div>
 
-                                <div class="timeline__desc">
-                                    <p>Чтобы у вас с подростком были доверительные отношения</p>
+                                    <div class="timeline__desc">
+                                        <p>{{ product.product_text }}</p>
+                                    </div>
                                 </div>
-                            </div>
-    
-                            <div class="timeline__block">
-                                <div class="timeline__bullet"></div>
+                            {% endfor %}
+                        </div> 
+                    </div>
+                </div>
 
-                                <div class="timeline__desc">
-                                    <p>Научить вашего ребёнка самостоятельно делать уроки</p>
-                                </div>
-                            </div>
+            </div>
 
-                            <div class="timeline__block">
-                                <div class="timeline__bullet"></div>
+        </section>
 
-                                <div class="timeline__desc">
-                                    <p>Экологично пережить развод и сохранить теплые отношения между ребёнком и разведёнными  родителями</p>
-                                </div>
-                            </div>
-
-                            <div class="timeline__block">
-                                <div class="timeline__bullet"></div>
-
-                                <div class="timeline__desc">
-                                    <p>Наладить отношения  со своими родителями, будучи уже взрослыми детьми, даже если они с ними не общались годы</p>
-                                </div>
-                            </div>
-    
-                        </div> <!-- end timeline -->
-                        
-                    </div> <!-- end s-about__timeline-section -->
-    
-                </div> <!-- end about__timeline -->
-
-            </div> <!-- end s-about__career -->
-
-        </section> <!-- end s-about -->
-
-
-        <!-- # works
-        ================================================== -->
         <section id="works" class="s-works">
 
             <div class="row">
                 <div class="column lg-12">
                     <h2 class="text-pretitle">Преимущества</h2>
-
-                    <p class="text-huge-title">
-                    Преимущества моих консультаций
-                    </p>
+                    <p class="text-huge-title">{{ page.advantage_title }}</p>
                 </div>
             </div>
 
             <div class="row folio-list block-lg-one-half block-stack-on-550" data-animate-block>
 
-                <div class="column" data-animate-el>
-                    <div class="folio-item">
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="{% static 'home/images/anonim.jpg' %}" Title="The Kinfolk" data-size="1050x700">
-                                <img src="{% static 'home/images/portfolio/skaterboy.jpg' %}" 
-                                     srcset="{% static 'home/images/anonim.jpg' %} 1x, {% static 'home/images/anonim.jpg' %} 2x" alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <h4 class="folio-item__title">Анонимность 100%</h4>
-                            <p>
-                                До обращения, во время консультирования, после обращения
-                            </p>
-                        </div>
-                        <div class="folio-item__caption">
-                            <p>
-                                До обращения, во время консультирования, после обращения
-                            </p>
+                {% for element in page.adv_block.all %}
+                    {% image element.adv_image height-600 format-webp as adv_image %}
+                    <div class="column" data-animate-el>
+                        <div class="folio-item">
+                            <div class="folio-item__thumb">
+                                <a class="folio-item__thumb-link" href="{{ adv_image.url }}" data-size="1050x700">
+                                    <img src="{{ adv_image.url }}" 
+                                        srcset="{{ adv_image.url }} 1x, {{ adv_image.url }} 2x" alt="">
+                                </a>
+                            </div>
+                            <div class="folio-item__info">
+                                <h4 class="folio-item__title">{{ element.adv_title }}</h4>
+                                <p>{{ element.adv_text | safe }}</p>
+                            </div>
+                            <div class="folio-item__caption">
+                                <p>{{ element.adv_text | safe }}</p>
+                            </div>
                         </div>
                     </div>
-                </div> <!-- end column -->
+                {% endfor %}
 
-                <div class="column" data-animate-el>
-                    <div class="folio-item">
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="{% static 'home/images/online.jpg' %}" Title="The Kinfolk" data-size="1050x700">
-                                <img src="{% static 'home/images/portfolio/skaterboy.jpg' %}" 
-                                     srcset="{% static 'home/images/online.jpg' %} 1x, {% static 'home/images/online.jpg' %} 2x" alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <h4 class="folio-item__title">Доступность</h4>
-                            <p>
-                                Тренд нашего времени - быстро, легко, доступно, поэтому сегодня так популярны онлайн-консультации. 
-                                 Я работаю с клиентами в  онлайне (Zoom, WhatsApp, Telegram) — большинству так удобнее, а эффективность ничуть не страдает. 
-                                Возможна как комплексная системная работа, так и разовые консультации.
-                            </p>
-                        </div>
-                        <div class="folio-item__caption">
-                            <p>
-                                Тренд нашего времени - быстро, легко, доступно, поэтому сегодня так популярны онлайн-консультации. 
-                                 Я работаю с клиентами в  онлайне (Zoom, WhatsApp, Telegram) — большинству так удобнее, а эффективность ничуть не страдает. 
-                                Возможна как комплексная системная работа, так и разовые консультации.
-                            </p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-
-                <div class="column" data-animate-el>
-                    <div class="folio-item">
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="{% static 'home/images/irl.webp' %}" Title="The Kinfolk" data-size="1050x700">
-                                <img src="{% static 'home/images/portfolio/skaterboy.jpg' %}" 
-                                     srcset="{% static 'home/images/irl.webp' %} 1x, {% static 'home/images/irl.webp' %} 2x" alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <h4 class="folio-item__title">Комфортные очные консультации</h4>
-                            <p>
-                                Если вы хотите встретиться лично в комфортном пространстве, то приглашаю вас в  личный кабинет в собственной Академии семейных отношений. Красивый вид из окна на исторический центр города и ароматная чашка кофе сделают нашу беседу более теплой и по-домашнему уютной. 
-                            </p>
-                        </div>
-                        <div class="folio-item__caption">
-                            <p>
-                                Если вы хотите встретиться лично в комфортном пространстве, то приглашаю вас в  личный кабинет в собственной Академии семейных отношений. Красивый вид из окна на исторический центр города и ароматная чашка кофе сделают нашу беседу более теплой и по-домашнему уютной. 
-                            </p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-
-                <div class="column" data-animate-el>
-                    <div class="folio-item">
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="{% static 'home/images/free.jpg' %}" Title="The Kinfolk" data-size="1050x700">
-                                <img src="{% static 'home/images/portfolio/skaterboy.jpg' %}" 
-                                     srcset="{% static 'home/images/free.jpg' %} 1x, {% static 'home/images/free.jpg' %} 2x" alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <h4 class="folio-item__title">Первая консультация бесплатно</h4>
-                            <p>
-                                Когда вы стоите на пороге кризиса, все, что вам на самом деле нужно - это человек, котрый возьмет вас за руку и проведет к выходу. Хотите узнать, тот ли я человек, что вам нужен? Приходите знакомиться - это бесплатно. 
-                            </p>
-                        </div>
-                        <div class="folio-item__caption">
-                            <p>
-                                Когда вы стоите на пороге кризиса, все, что вам на самом деле нужно - это человек, котрый возьмет вас за руку и проведет к выходу. Хотите узнать, тот ли я человек, что вам нужен? Приходите знакомиться - это бесплатно. 
-                            </p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-    
-            </div> <!-- folio-list -->
+            </div>
 
             <!-- <section id="testimonials">
 
@@ -448,42 +283,30 @@
                 
             </section> -->
 
-        </section> <!-- end s-works -->
+        </section>
 
-        <!-- # site footer
-        ================================================== -->
         <footer id="colophon" class="s-footer">
 
             <div class="row s-footer__contact-header">
                 <div class="column lg-12">
                     <h2 class="text-pretitle">Обратная связь</h2>
-
-                    <p class="text-huge-title">
-                        Я помогу разобраться с вашей проблемой
-                    </p>
+                    <p class="text-huge-title">{{ page.feedback_title }}</p>
                 </div>
-            </div> <!-- end s-footer__content -->
+            </div>
 
             <div class="row s-footer__contact-content">
 
                 <div class="column lg-5 md-6 stack-on-900 left-block">
-                    <p>
-                        Запишитесь на первую бесплатную онлайн консультацию
-                        <br>
-                        Приходите знакомиться - это бесплатно!
-                    </p>
-
+                    <p>{{ page.feedback_text | safe }}</p>
                     <div class="s-footer__buttons">
-                        <a href="https://wa.me/79140309544" target="_blank" class="btn btn--primary u-fullwidth">Записаться в WhatsApp</a>
-                        <a href="http://t.me/psiholog_pashina" target="_blank" class="btn btn--primary u-fullwidth">Записаться в Telegram</a>
-                        <a href="tel:+79140309544" class="btn btn--primary u-fullwidth">Записаться по телефону</a>
+                        {% for element in page.buttons_block.all %}
+                            <a href="{{element.button_link}}" target="_blank" class="btn btn--primary u-fullwidth">{{ element.button_title }}1</a>
+                        {% endfor %}
                     </div>
-
                     </p>
                 </div>
 
                 <!-- <div class="column lg-4 md-5 stack-on-900 right-block">
-
                     <div class="s-footer__contact-info" >
                         <h2 class="text-subtitle">
                             Реквизиты
@@ -492,9 +315,9 @@
                         <p>ИНН 1234567890</p>
                         <p>и т.д.</p>
                     </div>
-                    
                 </div> -->
-            </div> <!-- end s-footer__contact-content -->
+                
+            </div>
 
             <div class="row s-footer__bottom">
                 <div class="column ss-copyright">
@@ -507,15 +330,12 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M6 4h12v2H6zm5 10v6h2v-6h5l-6-6-6 6z"></path></svg>
                     </a>
                 </div>
-            </div> <!-- end s-footer__bottom-->
+            </div>
 
-        </footer> <!-- end s-footer -->
+        </footer>
 
-    </div> <!-- end s-pagewrap -->
+    </div>
 
-
-    <!-- photoswipe background
-    ================================================== -->
     <div aria-hidden="true" class="pswp" role="dialog" tabindex="-1">
 
         <div class="pswp__bg"></div>
@@ -551,11 +371,8 @@
 
         </div>
 
-    </div> <!-- end photoSwipe background -->
+    </div>
 
-
-    <!-- Java Script
-    ================================================== -->
     <script src="{% static 'home/js/plugins.js' %}"></script>
     <script src="{% static 'home/js/main.js' %}"></script>
 
